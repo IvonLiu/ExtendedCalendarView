@@ -1,7 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6917e766-c313-4dc4-98dd-3d9caffc6fae" name="Default" comment="" />
+    <list default="true" id="6917e766-c313-4dc4-98dd-3d9caffc6fae" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/.classpath" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/.project" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/AndroidManifest.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/Screenshot_2014-01-10-19-57-06_framed.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/Screenshot_2014-04-04-18-11-16.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/bin/AndroidManifest.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/bin/extendedcalendarview.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/bin/res/crunch/drawable-hdpi/blue.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/bin/res/crunch/drawable-hdpi/day_bg.9.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/bin/res/crunch/drawable-hdpi/green.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/bin/res/crunch/drawable-hdpi/navigation_next_item.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/bin/res/crunch/drawable-hdpi/navigation_previous_item.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/bin/res/crunch/drawable-hdpi/orange.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/bin/res/crunch/drawable-hdpi/purple.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/bin/res/crunch/drawable-hdpi/red.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/bin/res/crunch/drawable-xhdpi/day_bg.9.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/bin/res/crunch/drawable-xhdpi/navigation_next_item.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/bin/res/crunch/drawable-xhdpi/navigation_previous_item.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/build.properties" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/proguard-project.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/project.properties" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/color/date_number_text_color.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/drawable-hdpi/blue.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/drawable-hdpi/day_bg.9.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/drawable-hdpi/green.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/drawable-hdpi/ic_launcher.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/drawable-hdpi/navigation_next_item.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/drawable-hdpi/navigation_previous_item.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/drawable-hdpi/orange.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/drawable-hdpi/purple.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/drawable-hdpi/quickcontact_badge_overlay_normal_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/drawable-hdpi/red.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/drawable-mdpi/ic_launcher.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/drawable-xhdpi/day_bg.9.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/drawable-xhdpi/ic_launcher.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/drawable-xhdpi/navigation_next_item.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/drawable-xhdpi/navigation_previous_item.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/drawable/date_number_background.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/drawable/day_selected.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/drawable/normal_day.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/drawable/today.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/layout/day_of_week.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/layout/day_view.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/values-land/dimen.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/values-sw600dp-land/dimen.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/values-sw600dp/dimen.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/values-sw720dp-land/dimen.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/values-sw720dp/dimen.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/values-v11/styles.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/values-v14/styles.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/values/dimen.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/values/strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/res/values/styles.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/src/com/tyczj/extendedcalendarview/CalendarAdapter.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/src/com/tyczj/extendedcalendarview/CalendarProvider.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/src/com/tyczj/extendedcalendarview/Day.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/src/com/tyczj/extendedcalendarview/Event.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/ExtendedCalendarView/src/com/tyczj/extendedcalendarview/ExtendedCalendarView.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/LICENSE" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/README.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Screenshot_2014-01-10-19-57-06_framed.png" afterPath="" />
+    </list>
     <ignored path="ExtendedCalendarView.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26,7 +88,7 @@
       <file leaf-file-name="settings.gradle" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/settings.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.029752066" vertical-offset="0" max-vertical-offset="605">
+            <state vertical-scroll-proportion="0.05172414" vertical-offset="0" max-vertical-offset="348">
               <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
               <folding />
             </state>
@@ -39,6 +101,9 @@
     <FindUsagesManager>
       <setting name="OPEN_NEW_TAB" value="true" />
     </FindUsagesManager>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GradleLocalSettings">
     <option name="tasksExpandState">
@@ -1476,12 +1541,12 @@
     <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32978722" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.60106385" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32765958" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32978722" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1494,7 +1559,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24973376" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24973376" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -1549,7 +1614,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.029752066" vertical-offset="0" max-vertical-offset="605">
+        <state vertical-scroll-proportion="0.05172414" vertical-offset="0" max-vertical-offset="348">
           <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding />
         </state>
