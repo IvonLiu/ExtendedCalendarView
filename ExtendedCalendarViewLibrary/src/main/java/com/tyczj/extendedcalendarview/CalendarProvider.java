@@ -1,8 +1,5 @@
 package com.tyczj.extendedcalendarview;
 
-import java.util.HashMap;
-import java.util.List;
-
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -17,6 +14,9 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class CalendarProvider extends ContentProvider {
 	
@@ -96,7 +96,7 @@ public class CalendarProvider extends ContentProvider {
 
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
-		long rowID = db.insert(EVENTS_TABLE,null, values);
+		long rowID = db.insert(EVENTS_TABLE, null, values);
 		Uri _uri = null;
 		if(rowID > 0){
 			_uri = ContentUris.withAppendedId(CONTENT_ID_URI_BASE,rowID);
@@ -107,6 +107,31 @@ public class CalendarProvider extends ContentProvider {
 		}
 		return _uri;
 	}
+
+    @Override
+    public int bulkInsert(Uri uri, ContentValues[] values) {
+        Log.i("com.ivon.moscropsecondary", "Entering bulkInsert");
+        int insertCount = 0;
+        try {
+            db.beginTransaction();
+            for (ContentValues value : values) {
+                Log.i("com.ivon.moscropsecondary", "Try inserting " + (insertCount+1) + " value to db");
+                long id = db.insert(EVENTS_TABLE, null, value);
+                Log.i("com.ivon.moscropsecondary", "Successful insert " + (insertCount+1) + " value to db");
+                if (id > 0)
+                    insertCount++;
+            }
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.e("com.ivon.moscropsecondary", "Error in bulkinsert" + (insertCount+1), e);
+        } finally {
+            db.endTransaction();
+        }
+        Log.i("com.ivon.moscropsecondary", "Successful insert all values");
+        getContext().getContentResolver().notifyChange(uri, null);
+
+        return insertCount;
+    }
 
 	@Override
 	public boolean onCreate() {

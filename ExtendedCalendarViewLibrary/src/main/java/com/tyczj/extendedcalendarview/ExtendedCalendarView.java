@@ -202,7 +202,7 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 		}
 	}
 	
-	private void previousMonth(){
+	public void previousMonth(){
 		if(cal.get(Calendar.MONTH) == cal.getActualMinimum(Calendar.MONTH)) {				
 			cal.set((cal.get(Calendar.YEAR)-1),cal.getActualMaximum(Calendar.MONTH),1);
 		} else {
@@ -211,7 +211,7 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 		rebuildCalendar();
 	}
 	
-	private void nextMonth(){
+	public void nextMonth(){
 		if(cal.get(Calendar.MONTH) == cal.getActualMaximum(Calendar.MONTH)) {				
 			cal.set((cal.get(Calendar.YEAR)+1),cal.getActualMinimum(Calendar.MONTH),1);
 		} else {
