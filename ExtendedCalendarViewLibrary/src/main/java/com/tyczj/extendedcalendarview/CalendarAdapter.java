@@ -1,12 +1,5 @@
 package com.tyczj.extendedcalendarview;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Locale;
-import java.util.Set;
-import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
-
 import android.content.Context;
 import android.text.format.Time;
 import android.view.LayoutInflater;
@@ -17,6 +10,13 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.Set;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 public class CalendarAdapter extends BaseAdapter{
 	
@@ -238,7 +238,7 @@ public class CalendarAdapter extends BaseAdapter{
         	dayList.add(d);
         }
     }
-	
+
 //	public abstract static class OnAddNewEventClick{
 //		public abstract void onAddNewEventClick();
 //	}

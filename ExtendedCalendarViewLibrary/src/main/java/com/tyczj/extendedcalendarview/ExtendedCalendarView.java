@@ -1,11 +1,10 @@
 package com.tyczj.extendedcalendarview;
 
-import java.util.Calendar;
-import java.util.Locale;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -13,13 +12,16 @@ import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.view.View.OnClickListener;
+
+import java.util.Calendar;
+import java.util.Locale;
 
 public class ExtendedCalendarView extends RelativeLayout implements OnItemClickListener,
 	OnClickListener{
@@ -62,7 +64,7 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 		this.context = context;
 		init();
 	}
-	
+
 	private void init(){
 		cal = Calendar.getInstance();
 		base = new RelativeLayout(context);
@@ -117,6 +119,7 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 		params.addRule(RelativeLayout.BELOW, base.getId());
 		
 		calendar = new GridView(context);
+        calendar.setSelector(new ColorDrawable(Color.TRANSPARENT));
 		calendar.setLayoutParams(params);
 		calendar.setVerticalSpacing(4);
 		calendar.setHorizontalSpacing(4);
