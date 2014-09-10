@@ -2,6 +2,7 @@ package com.tyczj.extendedcalendarview;
 
 import android.content.Context;
 import android.text.format.Time;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 public class CalendarAdapter extends BaseAdapter{
 	
@@ -37,7 +40,8 @@ public class CalendarAdapter extends BaseAdapter{
 
 	@Override
 	public int getCount() {
-		return days.length;
+		//return days.length;
+        return 49;
 	}
 
 	@Override
@@ -70,7 +74,8 @@ public class CalendarAdapter extends BaseAdapter{
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		View v = convertView;
+
+        View v = convertView;
 		LayoutInflater vi = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		if(position >= 0 && position < 7){
 			v = vi.inflate(R.layout.day_of_week, null);
@@ -93,7 +98,7 @@ public class CalendarAdapter extends BaseAdapter{
 			}
 			
 		}else{
-			
+
 	        v = vi.inflate(R.layout.day_view, null);
 			FrameLayout today = (FrameLayout)v.findViewById(R.id.today_frame);
 			Calendar cal = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
@@ -103,7 +108,7 @@ public class CalendarAdapter extends BaseAdapter{
 			}else{
 				today.setVisibility(View.GONE);
 			}
-			
+
 			TextView dayTV = (TextView)v.findViewById(R.id.textView1);
 			
 			RelativeLayout rl = (RelativeLayout)v.findViewById(R.id.rl);
@@ -169,12 +174,21 @@ public class CalendarAdapter extends BaseAdapter{
 				
 			if(day.getDay() == 0){
 				rl.setVisibility(View.GONE);
+                //rl.setBackgroundColor(Color.BLACK);
 			}else{
 				dayTV.setVisibility(View.VISIBLE);
 				dayTV.setText(String.valueOf(day.getDay()));
 			}
+
+            if (d.getYear() == this.cal.get(Calendar.YEAR) && d.getMonth() == this.cal.get(Calendar.MONTH)) {
+                dayTV.setTextColor(context.getResources().getColorStateList(R.color.date_number_text_color));
+            } else {
+                dayTV.setTextColor(0xffc1c1c1);
+            }
 		}
-		
+
+
+
 		return v;
 	}
 	
@@ -190,7 +204,7 @@ public class CalendarAdapter extends BaseAdapter{
         TimeZone tz = TimeZone.getDefault();
         
         // figure size of the array
-        if(firstDay==1){
+        if(firstDay==1){        // Month starts on a Sunday
         	days = new String[lastDay+(FIRST_DAY_OF_WEEK*6)];
         }
         else {
@@ -201,10 +215,31 @@ public class CalendarAdapter extends BaseAdapter{
         
         // populate empty days before first real day
         if(firstDay>1) {
-	        for(j=0;j<(firstDay-FIRST_DAY_OF_WEEK)+7;j++) {
-	        	days[j] = "";
-	        	Day d = new Day(context,0,0,0);
-	        	dayList.add(d);
+            Calendar lastMonth = GregorianCalendar.getInstance();
+            //noinspection ResourceType
+            lastMonth.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+
+            if (lastMonth.get(Calendar.MONTH) == Calendar.JANUARY) {
+                lastMonth.set(Calendar.YEAR, lastMonth.get(Calendar.YEAR)-1);
+                lastMonth.set(Calendar.MONTH, Calendar.DECEMBER);
+            } else {
+                lastMonth.set(Calendar.MONTH, lastMonth.get(Calendar.MONTH)-1);
+            }
+
+            int firstShownDate = lastMonth.getActualMaximum(Calendar.DAY_OF_MONTH) - firstDay + 2;
+            lastMonth.set(Calendar.DAY_OF_MONTH, firstShownDate);
+
+            for(j=0;j<(firstDay-FIRST_DAY_OF_WEEK)+7;j++) {
+                if (j >= 7) {
+                    days[j] = "";
+                    Day d = new Day(context, lastMonth.get(Calendar.DAY_OF_MONTH), lastMonth.get(Calendar.MONTH), lastMonth.get(Calendar.YEAR));
+                    dayList.add(d);
+                    lastMonth.set(Calendar.DAY_OF_MONTH, lastMonth.get(Calendar.DAY_OF_MONTH)+1);   // Increment day by one
+                } else {
+                    days[j] = "";
+                    Day d = new Day(context, 0, 0, 0);
+                    dayList.add(d);
+                }
 	        }
         }
 	    else {
@@ -236,6 +271,26 @@ public class CalendarAdapter extends BaseAdapter{
         	days[i] = ""+dayNumber;
         	dayNumber++;
         	dayList.add(d);
+        }
+
+        // Fill in remaining days
+
+        int nextMonth_Year = cal.get(Calendar.YEAR);
+        int nextMonth_Month = cal.get(Calendar.MONTH);
+        int nextMonth_Day = 1;
+
+        if(nextMonth_Month == Calendar.DECEMBER) {
+            nextMonth_Year++;
+            nextMonth_Month = Calendar.JANUARY;
+        } else {
+            nextMonth_Month++;
+        }
+
+        for(int i=days.length; i<49; i++) {
+            days[j] = "";
+            Day d = new Day(context, nextMonth_Day, nextMonth_Year, nextMonth_Month);
+            dayList.add(d);
+            nextMonth_Day++;
         }
     }
 

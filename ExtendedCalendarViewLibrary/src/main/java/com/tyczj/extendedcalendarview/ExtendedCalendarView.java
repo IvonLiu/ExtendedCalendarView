@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class ExtendedCalendarView extends RelativeLayout implements OnItemClickListener,
@@ -28,6 +29,7 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 	
 	private Context context;
 	private OnDayClickListener dayListener;
+    private OnDaySelectListener selectListener;
 	private GridView calendar;
 	private CalendarAdapter mAdapter;
 	private Calendar cal;
@@ -42,10 +44,22 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 	public static final int UP_DOWN_GESTURE = 2;
 	private static final int SWIPE_MIN_DISTANCE = 120;
 	private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+
+    private SelectedDate mLastSelectedDate;
 	
 	public interface OnDayClickListener{
 		public void onDayClicked(AdapterView<?> adapter, View view, int position, long id, Day day);
 	}
+
+    public static class SelectedDate {
+        public int year;
+        public int month;
+        public int index;   // Note: this is not day of month, but index within the GridView
+    }
+
+    public interface OnDaySelectListener {
+        public void onDaySelected(Day day);
+    }
 
 	public ExtendedCalendarView(Context context) {
 		super(context);
@@ -113,7 +127,7 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 		addView(base);
 		
 		params = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-		params.bottomMargin = 20;
+		//params.bottomMargin = 20;
 		params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 		params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 		params.addRule(RelativeLayout.BELOW, base.getId());
@@ -126,6 +140,7 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 		calendar.setNumColumns(7);
 		calendar.setChoiceMode(GridView.CHOICE_MODE_SINGLE);
 		calendar.setDrawSelectorOnTop(true);
+        //calendar.setBackgroundColor(Color.BLACK);
 		
 		mAdapter = new CalendarAdapter(context,cal);
 		calendar.setAdapter(mAdapter);
@@ -136,6 +151,9 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 	            return calendarGesture.onTouchEvent(event);
 	        }
 	    });
+
+        checkLastSelectedDate();
+        selectDay(true);
 		
 		addView(calendar);
 	}
@@ -166,15 +184,36 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		if(dayListener != null){
-			Day d = (Day) mAdapter.getItem(arg2);
-			if(d.getDay() != 0){
-				dayListener.onDayClicked(arg0, arg1, arg2, arg3,d);
-			}
-		}
-	}
-	
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        Day d = (Day) mAdapter.getItem(position);
+        checkLastSelectedDate();
+
+        if (d.getYear() == cal.get(Calendar.YEAR) && d.getMonth() == cal.get(Calendar.MONTH)) {
+            if (d.getDay() != 0) {
+
+                mLastSelectedDate.year = cal.get(Calendar.YEAR);
+                mLastSelectedDate.month = cal.get(Calendar.MONTH);
+                mLastSelectedDate.index = position;
+                selectDay(false);
+
+                if (dayListener != null) {
+                    dayListener.onDayClicked(parent, view, position, id, d);
+                }
+            } else {
+                selectDay(true);
+            }
+        } else {
+            calendar.setItemChecked(position, false);
+            selectDay(true);
+            if (d.getYear() < cal.get(Calendar.YEAR) || d.getMonth() < cal.get(Calendar.MONTH)) {
+                previousMonth();
+            } else {
+                nextMonth();
+            }
+        }
+    }
+
 	/**
 	 * 
 	 * @param listener
@@ -187,6 +226,17 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 			calendar.setOnItemClickListener(this);
 		}
 	}
+
+    public void setOnDaySelectListener(OnDaySelectListener listener) {
+        if (calendar != null) {
+            selectListener = listener;
+            calendar.setOnItemClickListener(this);
+
+            // Resend last selected date
+            checkLastSelectedDate();
+            selectListener.onDaySelected((Day) mAdapter.getItem(mLastSelectedDate.index));
+        }
+    }
 
 	@Override
 	public void onClick(View v) {
@@ -233,8 +283,40 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 	public void refreshCalendar(){
 		mAdapter.refreshDays();
 		mAdapter.notifyDataSetChanged();
+
+        checkLastSelectedDate();
+        selectDay(true);
 	}
-	
+
+    private void checkLastSelectedDate() {
+        if(mLastSelectedDate == null) {
+            mLastSelectedDate = new SelectedDate();
+            Calendar today = GregorianCalendar.getInstance();
+            mLastSelectedDate.year = today.get(Calendar.YEAR);
+            mLastSelectedDate.month = today.get(Calendar.MONTH);
+            int todayDay = today.get(Calendar.DAY_OF_MONTH);
+            today.set(Calendar.DAY_OF_MONTH, 1);
+            int offset = today.get(Calendar.DAY_OF_WEEK);
+
+            mLastSelectedDate.index = todayDay + offset + 5;
+        }
+    }
+
+    private void selectDay(boolean forceCheck) {
+        if (mLastSelectedDate != null) {
+            if (cal.get(Calendar.YEAR) == mLastSelectedDate.year && cal.get(Calendar.MONTH) == mLastSelectedDate.month) {
+                if (forceCheck) {
+                    calendar.setItemChecked(mLastSelectedDate.index, true);
+                }
+                if (selectListener != null) {
+                    selectListener.onDaySelected((Day) mAdapter.getItem(mLastSelectedDate.index));
+                }
+            } else {
+                calendar.setItemChecked(mLastSelectedDate.index, false);
+            }
+        }
+    }
+
 	/**
 	 * 
 	 * @param color
