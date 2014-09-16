@@ -1,10 +1,10 @@
 package com.tyczj.extendedcalendarview;
 
+import android.graphics.Bitmap;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
-
-import android.graphics.Bitmap;
 
 public class Event {
 	
@@ -114,5 +114,13 @@ public class Event {
 		
 		return date;
 	}
+
+    public long getStartMillis() {
+        return start;
+    }
+
+    public long getEndMillis() {
+        return end;
+    }
 
 }

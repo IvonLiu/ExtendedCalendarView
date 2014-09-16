@@ -214,43 +214,33 @@ public class CalendarAdapter extends BaseAdapter{
         int j=FIRST_DAY_OF_WEEK;
         
         // populate empty days before first real day
-        if(firstDay>1) {
-            Calendar lastMonth = GregorianCalendar.getInstance();
-            //noinspection ResourceType
-            lastMonth.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+        Calendar lastMonth = GregorianCalendar.getInstance();
+        //noinspection ResourceType
+        lastMonth.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
 
-            if (lastMonth.get(Calendar.MONTH) == Calendar.JANUARY) {
-                lastMonth.set(Calendar.YEAR, lastMonth.get(Calendar.YEAR)-1);
-                lastMonth.set(Calendar.MONTH, Calendar.DECEMBER);
-            } else {
-                lastMonth.set(Calendar.MONTH, lastMonth.get(Calendar.MONTH)-1);
-            }
-
-            int firstShownDate = lastMonth.getActualMaximum(Calendar.DAY_OF_MONTH) - firstDay + 2;
-            lastMonth.set(Calendar.DAY_OF_MONTH, firstShownDate);
-
-            for(j=0;j<(firstDay-FIRST_DAY_OF_WEEK)+7;j++) {
-                if (j >= 7) {
-                    days[j] = "";
-                    Day d = new Day(context, lastMonth.get(Calendar.DAY_OF_MONTH), lastMonth.get(Calendar.MONTH), lastMonth.get(Calendar.YEAR));
-                    dayList.add(d);
-                    lastMonth.set(Calendar.DAY_OF_MONTH, lastMonth.get(Calendar.DAY_OF_MONTH)+1);   // Increment day by one
-                } else {
-                    days[j] = "";
-                    Day d = new Day(context, 0, 0, 0);
-                    dayList.add(d);
-                }
-	        }
+        if (lastMonth.get(Calendar.MONTH) == Calendar.JANUARY) {
+            lastMonth.set(Calendar.YEAR, lastMonth.get(Calendar.YEAR)-1);
+            lastMonth.set(Calendar.MONTH, Calendar.DECEMBER);
+        } else {
+            lastMonth.set(Calendar.MONTH, lastMonth.get(Calendar.MONTH)-1);
         }
-	    else {
-	    	for(j=0;j<(FIRST_DAY_OF_WEEK*6)+7;j++) {
-	        	days[j] = "";
-	        	Day d = new Day(context,0,0,0);
-	        	dayList.add(d);
-	        }
-	    	j=FIRST_DAY_OF_WEEK*6+1; // sunday => 1, monday => 7
+
+        int firstShownDate = lastMonth.getActualMaximum(Calendar.DAY_OF_MONTH) - firstDay + 2;
+        lastMonth.set(Calendar.DAY_OF_MONTH, firstShownDate);
+
+        for(j=0;j<(firstDay-FIRST_DAY_OF_WEEK)+7;j++) {
+            if (j >= 7) {
+                days[j] = "";
+                Day d = new Day(context, lastMonth.get(Calendar.DAY_OF_MONTH), lastMonth.get(Calendar.MONTH), lastMonth.get(Calendar.YEAR));
+                dayList.add(d);
+                lastMonth.set(Calendar.DAY_OF_MONTH, lastMonth.get(Calendar.DAY_OF_MONTH)+1);   // Increment day by one
+            } else {
+                days[j] = "";
+                Day d = new Day(context, 0, 0, 0);
+                dayList.add(d);
+            }
 	    }
-        
+
         // populate days
         int dayNumber = 1;
         
