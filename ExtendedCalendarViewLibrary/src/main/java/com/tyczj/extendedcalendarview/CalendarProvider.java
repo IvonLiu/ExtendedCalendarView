@@ -110,24 +110,20 @@ public class CalendarProvider extends ContentProvider {
 
     @Override
     public int bulkInsert(Uri uri, ContentValues[] values) {
-        Log.i("com.ivon.moscropsecondary", "Entering bulkInsert");
         int insertCount = 0;
         try {
             db.beginTransaction();
             for (ContentValues value : values) {
-                Log.i("com.ivon.moscropsecondary", "Try inserting " + (insertCount+1) + " value to db");
                 long id = db.insert(EVENTS_TABLE, null, value);
-                Log.i("com.ivon.moscropsecondary", "Successful insert " + (insertCount+1) + " value to db");
                 if (id > 0)
                     insertCount++;
             }
             db.setTransactionSuccessful();
         } catch (Exception e) {
-            Log.e("com.ivon.moscropsecondary", "Error in bulkinsert" + (insertCount+1), e);
+            e.printStackTrace();
         } finally {
             db.endTransaction();
         }
-        Log.i("com.ivon.moscropsecondary", "Successful insert all values");
         getContext().getContentResolver().notifyChange(uri, null);
 
         return insertCount;
