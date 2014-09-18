@@ -250,13 +250,18 @@ public class CalendarAdapter extends BaseAdapter{
         
         for(int i=j-1;i<days.length;i++) {
         	Day d = new Day(context,dayNumber,year,month);
-        	
-        	Calendar cTemp = Calendar.getInstance();
-        	cTemp.set(year, month, dayNumber);
-        	int startDay = Time.getJulianDay(cTemp.getTimeInMillis(), TimeUnit.MILLISECONDS.toSeconds(tz.getOffset(cTemp.getTimeInMillis())));
-        	
         	d.setAdapter(this);
-        	d.setStartDay(startDay);
+
+            Calendar cTemp = Calendar.getInstance();
+            cTemp.set(year, month, dayNumber, 0, 0, 0);
+            cTemp.set(Calendar.MILLISECOND, 0);
+            //int startDay = Time.getJulianDay(cTemp.getTimeInMillis(), TimeUnit.MILLISECONDS.toSeconds(tz.getOffset(cTemp.getTimeInMillis())));
+            long startMillis = cTemp.getTimeInMillis();
+            cTemp.set(year, month, dayNumber, 23, 59, 59);
+            cTemp.set(Calendar.MILLISECOND, 999);
+            long endMillis = cTemp.getTimeInMillis();
+
+        	d.setDayBoundsMillis(startMillis, endMillis);
         	
         	days[i] = ""+dayNumber;
         	dayNumber++;

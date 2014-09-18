@@ -1,5 +1,12 @@
 package com.tyczj.extendedcalendarview;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.os.AsyncTask;
+import android.text.format.Time;
+import android.util.Log;
+import android.widget.BaseAdapter;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -7,15 +14,10 @@ import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
-import android.content.Context;
-import android.database.Cursor;
-import android.os.AsyncTask;
-import android.text.format.Time;
-import android.widget.BaseAdapter;
-
 public class Day{
 	
-	int startDay;
+	long startMillis;
+    long endMillis;
 	int monthEndDay;
 	int day;
 	int year;
@@ -73,16 +75,21 @@ public class Day{
 	/**
 	 * Set the start day
 	 * 
-	 * @param startDay
+	 * @param startMillis
 	 */
-	public void setStartDay(int startDay){
-		this.startDay = startDay;
+	public void setDayBoundsMillis(long startMillis, long endMillis){
+		this.startMillis = startMillis;
+        this.endMillis = endMillis;
 		new GetEvents().execute();
 	}
 	
-	public int getStartDay(){
-		return startDay;
+	public long getStartMillis(){
+		return startMillis;
 	}
+
+    public long getEndMillis() {
+        return endMillis;
+    }
 	
 	public int getNumOfEvenets(){
 		return events.size();
@@ -119,9 +126,31 @@ public class Day{
 
 		@Override
 		protected Void doInBackground(Void... params) {
-			Cursor c = context.getContentResolver().query(CalendarProvider.CONTENT_URI,new String[] {CalendarProvider.ID,CalendarProvider.EVENT,
-					CalendarProvider.DESCRIPTION,CalendarProvider.LOCATION,CalendarProvider.START,CalendarProvider.END,CalendarProvider.COLOR},"?>="+CalendarProvider.START_DAY+" AND "+ CalendarProvider.END_DAY+">=?",
-					new String[] {String.valueOf(startDay),String.valueOf(startDay)}, null);
+
+            String dayStart = String.valueOf(startMillis);
+            String dayEnd = String.valueOf(endMillis);
+
+            String selection =
+                    "(" + CalendarProvider.START + "<=" + dayStart + " AND " + CalendarProvider.END + ">" + dayStart + ")"
+                    + " OR " +
+                    "(" + CalendarProvider.START + ">" + dayStart + " AND " + CalendarProvider.START + "<=" + dayEnd + ")";
+
+			Cursor c = context.getContentResolver().query(
+                    CalendarProvider.CONTENT_URI,
+                    new String[] {
+                            CalendarProvider.ID,
+                            CalendarProvider.EVENT,
+                            CalendarProvider.DESCRIPTION,
+                            CalendarProvider.LOCATION,
+                            CalendarProvider.START,
+                            CalendarProvider.END,
+                            CalendarProvider.COLOR
+                    },
+                    selection,
+					null,
+                    null
+            );
+
 			if(c != null && c.moveToFirst()){
 				do{
 					Event event = new Event(c.getLong(0),c.getLong(4),c.getLong(5));
