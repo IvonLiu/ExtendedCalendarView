@@ -112,29 +112,42 @@ public class CalendarAdapter extends BaseAdapter{
 			TextView dayTV = (TextView)v.findViewById(R.id.textView1);
 			
 			RelativeLayout rl = (RelativeLayout)v.findViewById(R.id.rl);
-			ImageView iv = (ImageView)v.findViewById(R.id.imageView1);
+            ImageView singleEvent = (ImageView) v.findViewById(R.id.singleEventIndicator);
+            ImageView multievent = (ImageView) v.findViewById(R.id.multiEventIndicator);
+			/*ImageView iv = (ImageView)v.findViewById(R.id.imageView1);
 			ImageView blue = (ImageView)v.findViewById(R.id.imageView2);
 			ImageView purple = (ImageView)v.findViewById(R.id.imageView3);
 			ImageView green = (ImageView)v.findViewById(R.id.imageView4);
 			ImageView orange = (ImageView)v.findViewById(R.id.imageView5);
-			ImageView red = (ImageView)v.findViewById(R.id.imageView6);	
+			ImageView red = (ImageView)v.findViewById(R.id.imageView6);*/
 			
-			blue.setVisibility(View.VISIBLE);
+			/*blue.setVisibility(View.VISIBLE);
 			purple.setVisibility(View.VISIBLE);
 			green.setVisibility(View.VISIBLE);
 			purple.setVisibility(View.VISIBLE);
 			orange.setVisibility(View.VISIBLE);
 			red.setVisibility(View.VISIBLE);
 			
-			iv.setVisibility(View.VISIBLE);
+			iv.setVisibility(View.VISIBLE);*/
 			dayTV.setVisibility(View.VISIBLE);
 			rl.setVisibility(View.VISIBLE);
-			
+
 			Day day = dayList.get(position);
-			
+
+            if (day.getNumOfEvenets() == 1) {
+                singleEvent.setVisibility(View.VISIBLE);
+                multievent.setVisibility(View.GONE);
+            } else if (day.getNumOfEvenets() > 1) {
+                singleEvent.setVisibility(View.GONE);
+                multievent.setVisibility(View.VISIBLE);
+            } else {
+                singleEvent.setVisibility(View.GONE);
+                multievent.setVisibility(View.GONE);
+            }
+			/*
 			if(day.getNumOfEvenets() > 0){
 				Set<Integer> colors = day.getColors();
-				
+
 				iv.setVisibility(View.INVISIBLE);
 				blue.setVisibility(View.INVISIBLE);
 				purple.setVisibility(View.INVISIBLE);
@@ -142,7 +155,7 @@ public class CalendarAdapter extends BaseAdapter{
 				purple.setVisibility(View.INVISIBLE);
 				orange.setVisibility(View.INVISIBLE);
 				red.setVisibility(View.INVISIBLE);
-				
+
 				if(colors.contains(0)){
 					iv.setVisibility(View.VISIBLE);
 				}
@@ -161,7 +174,7 @@ public class CalendarAdapter extends BaseAdapter{
 				if(colors.contains(1)){
 					red.setVisibility(View.VISIBLE);
 				}
-				
+
 			}else{
 				iv.setVisibility(View.INVISIBLE);
 				blue.setVisibility(View.INVISIBLE);
@@ -171,7 +184,7 @@ public class CalendarAdapter extends BaseAdapter{
 				orange.setVisibility(View.INVISIBLE);
 				red.setVisibility(View.INVISIBLE);
 			}
-				
+				*/
 			if(day.getDay() == 0){
 				rl.setVisibility(View.GONE);
                 //rl.setBackgroundColor(Color.BLACK);
