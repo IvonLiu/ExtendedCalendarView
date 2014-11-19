@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Calendar attributes because SOMEONE desparately wants a themeable calendar -->
+    <declare-styleable name="ExtendedCalendarView">
+        <attr name="backgroundColor" format="color" />
+        <attr name="dateTextColor" format="color" />
+        <attr name="disabledTextColor" format="color" />
+        <attr name="weekTextColor" format="color" />
+        <attr name="titleTextColor" format="color" />
+        <attr name="titleBackgroundColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="DefaultExtendedCalendarViewStyle">
+        <attr name="extendedCalendarViewStyle" format="reference" />
+    </declare-styleable>
+</resources>

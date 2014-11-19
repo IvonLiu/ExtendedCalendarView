@@ -30,10 +30,19 @@ public class CalendarAdapter extends BaseAdapter{
 //	OnAddNewEventClick mAddEvent;
 	
 	ArrayList<Day> dayList = new ArrayList<Day>();
-	
-	public CalendarAdapter(Context context, Calendar cal){
+
+    int dateTextColor;
+    int disabledTextColor;
+    int weekTextColor;
+
+	public CalendarAdapter(Context context, Calendar cal, int dateTextColor, int disabledTextColor, int weekTextColor){
 		this.cal = cal;
 		this.context = context;
+
+        this.dateTextColor = dateTextColor;
+        this.disabledTextColor = disabledTextColor;
+        this.weekTextColor = weekTextColor;
+
 		cal.set(Calendar.DAY_OF_MONTH, 1);
 		refreshDays();
 	}
@@ -80,6 +89,7 @@ public class CalendarAdapter extends BaseAdapter{
 		if(position >= 0 && position < 7){
 			v = vi.inflate(R.layout.day_of_week, null);
 			TextView day = (TextView)v.findViewById(R.id.textView1);
+            day.setTextColor(weekTextColor);
 			
 			if(position == 0){
 				day.setText(R.string.sunday);
@@ -194,9 +204,9 @@ public class CalendarAdapter extends BaseAdapter{
 			}
 
             if (d.getYear() == this.cal.get(Calendar.YEAR) && d.getMonth() == this.cal.get(Calendar.MONTH)) {
-                dayTV.setTextColor(context.getResources().getColorStateList(R.color.date_number_text_color));
+                dayTV.setTextColor(dateTextColor);
             } else {
-                dayTV.setTextColor(0xffc1c1c1);
+                dayTV.setTextColor(/*0xffc1c1c1*/disabledTextColor);
             }
 		}
 

@@ -2,12 +2,15 @@ package com.tyczj.extendedcalendarview;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
@@ -27,7 +30,6 @@ import java.util.Locale;
 public class ExtendedCalendarView extends RelativeLayout implements OnItemClickListener,
 	OnClickListener{
 	
-	private Context context;
 	private OnDayClickListener dayListener;
     private OnDaySelectListener selectListener;
 	private GridView calendar;
@@ -37,7 +39,7 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 	private RelativeLayout base;
 	private ImageView next,prev;
 	private int gestureType = 0;
-	private final GestureDetector calendarGesture = new GestureDetector(context,new GestureListener());
+	private final GestureDetector calendarGesture = new GestureDetector(getContext(), new GestureListener());
 	
 	public static final int NO_GESTURE = 0;
 	public static final int LEFT_RIGHT_GESTURE = 1;
@@ -62,28 +64,33 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
     }
 
 	public ExtendedCalendarView(Context context) {
-		super(context);
-		this.context = context;
-		init();
+        this(context, null);
 	}
 	
 	public ExtendedCalendarView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		this.context = context;
-		init();
+        this(context, attrs, R.attr.extendedCalendarViewStyle);
 	}
 	
-	public ExtendedCalendarView(Context context, AttributeSet attrs,int defStyle) {
+	public ExtendedCalendarView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		this.context = context;
-		init();
+		init(context, attrs, defStyle);
 	}
 
-	private void init(){
-		cal = Calendar.getInstance();
+    private int getColor() {
+        return 0;
+    }
+
+	private void init(Context context, AttributeSet attrs, int defStyle){
+
+        // load the styled attributes and set their properties
+        TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.ExtendedCalendarView, defStyle, 0);
+
+        cal = Calendar.getInstance();
 		base = new RelativeLayout(context);
 		base.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
 		base.setMinimumHeight(50);
+        int titleBackgroundColor = getColorFromAttribute(attributes, R.styleable.ExtendedCalendarView_titleBackgroundColor, 0x00000000);
+        base.setBackgroundColor(0xff00ff00);
 		
 		base.setId(4);
 		
@@ -108,6 +115,8 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 		month.setTextAppearance(context, android.R.attr.textAppearanceLarge);
 		month.setText(cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())+" "+cal.get(Calendar.YEAR));
 		month.setTextSize(25);
+        int titleColor = getColorFromAttribute(attributes, R.styleable.ExtendedCalendarView_titleTextColor, month.getCurrentTextColor());
+        month.setTextColor(titleColor);
 		
 		base.addView(month);
 		
@@ -140,9 +149,13 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 		calendar.setNumColumns(7);
 		calendar.setChoiceMode(GridView.CHOICE_MODE_SINGLE);
 		calendar.setDrawSelectorOnTop(true);
-        //calendar.setBackgroundColor(Color.BLACK);
-		
-		mAdapter = new CalendarAdapter(context,cal);
+        int backgroundColor = getColorFromAttribute(attributes, R.styleable.ExtendedCalendarView_backgroundColor, 0xFFFF0000);
+        calendar.setBackgroundColor(backgroundColor);
+
+        int dateTextColor = getColorFromAttribute(attributes, R.styleable.ExtendedCalendarView_dateTextColor, 0xFF403838);
+        int disabledTextColor = getColorFromAttribute(attributes, R.styleable.ExtendedCalendarView_disabledTextColor, 0xFFC1C1C1);
+        int weekTextColor = getColorFromAttribute(attributes, R.styleable.ExtendedCalendarView_weekTextColor, 0x00000000);
+		mAdapter = new CalendarAdapter(context, cal, dateTextColor, disabledTextColor, weekTextColor);
 		calendar.setAdapter(mAdapter);
 		calendar.setOnTouchListener(new OnTouchListener() {
 			
@@ -157,6 +170,20 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 		
 		addView(calendar);
 	}
+
+    private int getColorFromAttribute(TypedArray array, int index, int defValue) {
+        TypedValue typedValue = new TypedValue();
+        boolean retrieved = array.getValue(index, typedValue);
+        if (retrieved) {
+            if (typedValue.type == TypedValue.TYPE_ATTRIBUTE) {
+                Resources.Theme theme = getContext().getTheme();
+                theme.resolveAttribute(typedValue.data, typedValue, true);
+            }
+            return typedValue.data;
+        } else {
+            return defValue;
+        }
+    }
 
 	private class GestureListener extends SimpleOnGestureListener {
 	    @Override
