@@ -1,13 +1,13 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "20.0.0"
+    compileSdkVersion 21
+    buildToolsVersion "21.0.2"
 
     defaultConfig {
         applicationId "com.tyczj.extendedcalendarview"
         minSdkVersion 14
-        targetSdkVersion 19
+        targetSdkVersion 21
     }
 
     buildTypes {

@@ -2,12 +2,14 @@
 <resources>
     <!-- Calendar attributes because SOMEONE desparately wants a themeable calendar -->
     <declare-styleable name="ExtendedCalendarView">
-        <attr name="backgroundColor" format="color" />
-        <attr name="dateTextColor" format="color" />
-        <attr name="disabledTextColor" format="color" />
-        <attr name="weekTextColor" format="color" />
-        <attr name="titleTextColor" format="color" />
-        <attr name="titleBackgroundColor" format="color" />
+        <attr name="backgroundColor" format="reference|color" />
+        <attr name="dateTextColor" format="reference|color" />
+        <attr name="disabledTextColor" format="reference|color" />
+        <attr name="weekTextColor" format="reference|color" />
+        <attr name="titleTextColor" format="reference|color" />
+        <attr name="titleBackgroundColor" format="reference|color" />
+        <attr name="singleEventIcon" format="reference" />
+        <attr name="multiEventIcon" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="DefaultExtendedCalendarViewStyle">

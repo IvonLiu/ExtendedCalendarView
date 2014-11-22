@@ -1,8 +1,11 @@
 package com.tyczj.extendedcalendarview;
 
 import android.content.Context;
-import android.text.format.Time;
-import android.util.Log;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +19,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
-import java.util.Set;
 import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 
 public class CalendarAdapter extends BaseAdapter{
 	
@@ -31,17 +31,27 @@ public class CalendarAdapter extends BaseAdapter{
 	
 	ArrayList<Day> dayList = new ArrayList<Day>();
 
-    int dateTextColor;
-    int disabledTextColor;
+    ColorStateList dateTextColor;
+    ColorStateList disabledTextColor;
     int weekTextColor;
+    Drawable singleEventIcon;
+    Drawable multiEventIcon;
 
-	public CalendarAdapter(Context context, Calendar cal, int dateTextColor, int disabledTextColor, int weekTextColor){
+	public CalendarAdapter(Context context, Calendar cal,
+                            ColorStateList dateTextColor,
+                            ColorStateList disabledTextColor,
+                            int weekTextColor,
+                            Drawable singleEventIcon,
+                            Drawable multiEventIcon
+                            ){
 		this.cal = cal;
 		this.context = context;
 
         this.dateTextColor = dateTextColor;
         this.disabledTextColor = disabledTextColor;
         this.weekTextColor = weekTextColor;
+        this.singleEventIcon = singleEventIcon;
+        this.multiEventIcon = multiEventIcon;
 
 		cal.set(Calendar.DAY_OF_MONTH, 1);
 		refreshDays();
@@ -122,79 +132,22 @@ public class CalendarAdapter extends BaseAdapter{
 			TextView dayTV = (TextView)v.findViewById(R.id.textView1);
 			
 			RelativeLayout rl = (RelativeLayout)v.findViewById(R.id.rl);
-            ImageView singleEvent = (ImageView) v.findViewById(R.id.singleEventIndicator);
-            ImageView multievent = (ImageView) v.findViewById(R.id.multiEventIndicator);
-			/*ImageView iv = (ImageView)v.findViewById(R.id.imageView1);
-			ImageView blue = (ImageView)v.findViewById(R.id.imageView2);
-			ImageView purple = (ImageView)v.findViewById(R.id.imageView3);
-			ImageView green = (ImageView)v.findViewById(R.id.imageView4);
-			ImageView orange = (ImageView)v.findViewById(R.id.imageView5);
-			ImageView red = (ImageView)v.findViewById(R.id.imageView6);*/
-			
-			/*blue.setVisibility(View.VISIBLE);
-			purple.setVisibility(View.VISIBLE);
-			green.setVisibility(View.VISIBLE);
-			purple.setVisibility(View.VISIBLE);
-			orange.setVisibility(View.VISIBLE);
-			red.setVisibility(View.VISIBLE);
-			
-			iv.setVisibility(View.VISIBLE);*/
+            ImageView eventIndicator = (ImageView) v.findViewById(R.id.eventIndicator);
+            eventIndicator.setVisibility(View.VISIBLE);
+
 			dayTV.setVisibility(View.VISIBLE);
 			rl.setVisibility(View.VISIBLE);
 
 			Day day = dayList.get(position);
 
             if (day.getNumOfEvenets() == 1) {
-                singleEvent.setVisibility(View.VISIBLE);
-                multievent.setVisibility(View.GONE);
+                eventIndicator.setImageDrawable(singleEventIcon);
             } else if (day.getNumOfEvenets() > 1) {
-                singleEvent.setVisibility(View.GONE);
-                multievent.setVisibility(View.VISIBLE);
+                eventIndicator.setImageDrawable(multiEventIcon);
             } else {
-                singleEvent.setVisibility(View.GONE);
-                multievent.setVisibility(View.GONE);
+                eventIndicator.setVisibility(View.GONE);
             }
-			/*
-			if(day.getNumOfEvenets() > 0){
-				Set<Integer> colors = day.getColors();
 
-				iv.setVisibility(View.INVISIBLE);
-				blue.setVisibility(View.INVISIBLE);
-				purple.setVisibility(View.INVISIBLE);
-				green.setVisibility(View.INVISIBLE);
-				purple.setVisibility(View.INVISIBLE);
-				orange.setVisibility(View.INVISIBLE);
-				red.setVisibility(View.INVISIBLE);
-
-				if(colors.contains(0)){
-					iv.setVisibility(View.VISIBLE);
-				}
-				if(colors.contains(2)){
-					blue.setVisibility(View.VISIBLE);
-				}
-				if(colors.contains(4)){
-					purple.setVisibility(View.VISIBLE);
-				}
-				if(colors.contains(5)){
-					green.setVisibility(View.VISIBLE);
-				}
-				if(colors.contains(3)){
-					orange.setVisibility(View.VISIBLE);
-				}
-				if(colors.contains(1)){
-					red.setVisibility(View.VISIBLE);
-				}
-
-			}else{
-				iv.setVisibility(View.INVISIBLE);
-				blue.setVisibility(View.INVISIBLE);
-				purple.setVisibility(View.INVISIBLE);
-				green.setVisibility(View.INVISIBLE);
-				purple.setVisibility(View.INVISIBLE);
-				orange.setVisibility(View.INVISIBLE);
-				red.setVisibility(View.INVISIBLE);
-			}
-				*/
 			if(day.getDay() == 0){
 				rl.setVisibility(View.GONE);
                 //rl.setBackgroundColor(Color.BLACK);

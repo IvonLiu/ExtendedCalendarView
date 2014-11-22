@@ -2,6 +2,7 @@ package com.tyczj.extendedcalendarview;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -10,6 +11,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -85,12 +87,45 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
         // load the styled attributes and set their properties
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.ExtendedCalendarView, defStyle, 0);
 
+        int backgroundColor = 0;
+        ColorStateList dateTextColor = getDefaultColorStateList(0);;
+        ColorStateList disabledTextColor = getDefaultColorStateList(0);;
+        int weekTextColor = 0;
+        int titleTextColor = 0;
+        int titleBackgroundColor = 0;
+        Drawable singleEventIndicator = getDefaultDrawable(R.drawable.single_event);
+        Drawable multiEventIndicator = getDefaultDrawable(R.drawable.multi_event);
+
+        int n = attributes.getIndexCount();
+        for (int i=0; i<n; i++) {
+            int attr = attributes.getIndex(i);
+
+            if (attr == R.styleable.ExtendedCalendarView_backgroundColor) {
+                backgroundColor = getColor(attributes, R.styleable.ExtendedCalendarView_backgroundColor, 0);
+            } else if (attr == R.styleable.ExtendedCalendarView_dateTextColor) {
+                dateTextColor = getColorStateList(attributes, R.styleable.ExtendedCalendarView_dateTextColor, 0);
+            } else if (attr == R.styleable.ExtendedCalendarView_disabledTextColor) {
+                disabledTextColor = getColorStateList(attributes, R.styleable.ExtendedCalendarView_disabledTextColor, 0);
+            } else if (attr == R.styleable.ExtendedCalendarView_weekTextColor) {
+                weekTextColor = getColor(attributes, R.styleable.ExtendedCalendarView_weekTextColor, 0);
+            } else if (attr == R.styleable.ExtendedCalendarView_titleTextColor) {
+                titleTextColor = getColor(attributes, R.styleable.ExtendedCalendarView_titleTextColor, 0);
+            } else if (attr == R.styleable.ExtendedCalendarView_titleBackgroundColor) {
+                titleBackgroundColor = getColor(attributes, R.styleable.ExtendedCalendarView_titleBackgroundColor, 0);
+            } else if (attr == R.styleable.ExtendedCalendarView_singleEventIcon) {
+                singleEventIndicator = getDrawable(attributes, R.styleable.ExtendedCalendarView_singleEventIcon, R.drawable.single_event);
+            } else if (attr == R.styleable.ExtendedCalendarView_multiEventIcon) {
+                multiEventIndicator = getDrawable(attributes, R.styleable.ExtendedCalendarView_multiEventIcon, R.drawable.multi_event);
+            }
+        }
+
+        attributes.recycle();
+
         cal = Calendar.getInstance();
 		base = new RelativeLayout(context);
 		base.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
 		base.setMinimumHeight(50);
-        int titleBackgroundColor = getColorFromAttribute(attributes, R.styleable.ExtendedCalendarView_titleBackgroundColor, 0x00000000);
-        base.setBackgroundColor(0xff00ff00);
+        base.setBackgroundColor(titleBackgroundColor);
 		
 		base.setId(4);
 		
@@ -115,8 +150,7 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 		month.setTextAppearance(context, android.R.attr.textAppearanceLarge);
 		month.setText(cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())+" "+cal.get(Calendar.YEAR));
 		month.setTextSize(25);
-        int titleColor = getColorFromAttribute(attributes, R.styleable.ExtendedCalendarView_titleTextColor, month.getCurrentTextColor());
-        month.setTextColor(titleColor);
+        month.setTextColor(titleTextColor);
 		
 		base.addView(month);
 		
@@ -149,13 +183,9 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 		calendar.setNumColumns(7);
 		calendar.setChoiceMode(GridView.CHOICE_MODE_SINGLE);
 		calendar.setDrawSelectorOnTop(true);
-        int backgroundColor = getColorFromAttribute(attributes, R.styleable.ExtendedCalendarView_backgroundColor, 0xFFFF0000);
         calendar.setBackgroundColor(backgroundColor);
 
-        int dateTextColor = getColorFromAttribute(attributes, R.styleable.ExtendedCalendarView_dateTextColor, 0xFF403838);
-        int disabledTextColor = getColorFromAttribute(attributes, R.styleable.ExtendedCalendarView_disabledTextColor, 0xFFC1C1C1);
-        int weekTextColor = getColorFromAttribute(attributes, R.styleable.ExtendedCalendarView_weekTextColor, 0x00000000);
-		mAdapter = new CalendarAdapter(context, cal, dateTextColor, disabledTextColor, weekTextColor);
+		mAdapter = new CalendarAdapter(context, cal, dateTextColor, disabledTextColor, weekTextColor, singleEventIndicator, multiEventIndicator);
 		calendar.setAdapter(mAdapter);
 		calendar.setOnTouchListener(new OnTouchListener() {
 			
@@ -171,9 +201,19 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 		addView(calendar);
 	}
 
-    private int getColorFromAttribute(TypedArray array, int index, int defValue) {
+    private int getColor(TypedArray attrs, int index, int defValue) {
+
+        // If typed value is a color int,
+        // attrs.getValue() will populate
+        // typedValue with the color value.
+        // If typed value is a reference to
+        // an attribute, resolve that attribute
+        // to another TypedValue. The value
+        // of that TypedValue will now contain
+        // the proper color value.
+
         TypedValue typedValue = new TypedValue();
-        boolean retrieved = array.getValue(index, typedValue);
+        boolean retrieved = attrs.getValue(index, typedValue);
         if (retrieved) {
             if (typedValue.type == TypedValue.TYPE_ATTRIBUTE) {
                 Resources.Theme theme = getContext().getTheme();
@@ -183,6 +223,82 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
         } else {
             return defValue;
         }
+    }
+
+    private ColorStateList getColorStateList(TypedArray attrs, int index, int defValue){
+
+        // If typed value is a ColorStateList,
+        // attrs.getValue() will populate
+        // typedValue with the proper reference
+        // to a ColorStateList. If typed value
+        // is a reference to an attribute,
+        // resolve that attribute to another
+        // TypedValue. The value of that
+        // TypedValue will now contain
+        // the reference to a ColorStateList.
+
+        TypedValue typedValue = new TypedValue();
+        boolean retrieved = attrs.getValue(index, typedValue);
+        if (retrieved) {
+            if (typedValue.type >= TypedValue.TYPE_FIRST_COLOR_INT && typedValue.type <= TypedValue.TYPE_LAST_COLOR_INT) {
+                // typedValue is pure color
+                return getDefaultColorStateList(typedValue.data);
+            } else {
+                if (typedValue.type == TypedValue.TYPE_ATTRIBUTE) {
+                    // typedValue is attribute
+                    // we must resolve it to
+                    // obtain the proper resource id
+                    Resources.Theme theme = getContext().getTheme();
+                    theme.resolveAttribute(typedValue.data, typedValue, true);
+                }
+                return getContext().getResources().getColorStateList(typedValue.resourceId);
+            }
+        } else {
+            return getDefaultColorStateList(defValue);
+        }
+    }
+
+    private Drawable getDrawable(TypedArray attrs, int index, int defValue) {
+
+        // If typed value is a drawable,
+        // attrs.getValue() will populate
+        // typedValue with the proper reference
+        // to a drawable. If typed value
+        // is a reference to an attribute,
+        // resolve that attribute to another
+        // TypedValue. The value of that
+        // TypedValue will now contain
+        // the reference to a drawable.
+
+        TypedValue typedValue = new TypedValue();
+        boolean retrieved = attrs.getValue(index, typedValue);
+        if (retrieved) {
+            if (typedValue.type == TypedValue.TYPE_ATTRIBUTE) {
+                // typedValue is attribute
+                // we must resolve it to
+                // obtain the proper resource id
+                Resources.Theme theme = getContext().getTheme();
+                theme.resolveAttribute(typedValue.data, typedValue, true);
+            }
+            return getContext().getResources().getDrawable(typedValue.resourceId);
+        } else {
+            return getDefaultDrawable(defValue);
+        }
+    }
+
+    private ColorStateList getDefaultColorStateList(int defValue) {
+        return new ColorStateList(
+                new int[][]{
+                        new int[] {}
+                },
+                new int[] {
+                        defValue
+                }
+        );
+    }
+
+    private Drawable getDefaultDrawable(int defValue) {
+        return getContext().getResources().getDrawable(defValue);
     }
 
 	private class GestureListener extends SimpleOnGestureListener {
