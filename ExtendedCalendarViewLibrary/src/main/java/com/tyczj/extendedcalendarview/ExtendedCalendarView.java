@@ -11,7 +11,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -93,8 +92,8 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
         int weekTextColor = 0;
         int titleTextColor = 0;
         int titleBackgroundColor = 0;
-        Drawable singleEventIndicator = getDefaultDrawable(R.drawable.single_event);
-        Drawable multiEventIndicator = getDefaultDrawable(R.drawable.multi_event);
+        Drawable singleEventIndicator = getDefaultDrawable(R.drawable.single_event_default);
+        Drawable multiEventIndicator = getDefaultDrawable(R.drawable.multi_event_default);
 
         int n = attributes.getIndexCount();
         for (int i=0; i<n; i++) {
@@ -113,9 +112,9 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
             } else if (attr == R.styleable.ExtendedCalendarView_titleBackgroundColor) {
                 titleBackgroundColor = getColor(attributes, R.styleable.ExtendedCalendarView_titleBackgroundColor, 0);
             } else if (attr == R.styleable.ExtendedCalendarView_singleEventIcon) {
-                singleEventIndicator = getDrawable(attributes, R.styleable.ExtendedCalendarView_singleEventIcon, R.drawable.single_event);
+                singleEventIndicator = getDrawable(attributes, R.styleable.ExtendedCalendarView_singleEventIcon, R.drawable.single_event_default);
             } else if (attr == R.styleable.ExtendedCalendarView_multiEventIcon) {
-                multiEventIndicator = getDrawable(attributes, R.styleable.ExtendedCalendarView_multiEventIcon, R.drawable.multi_event);
+                multiEventIndicator = getDrawable(attributes, R.styleable.ExtendedCalendarView_multiEventIcon, R.drawable.multi_event_default);
             }
         }
 

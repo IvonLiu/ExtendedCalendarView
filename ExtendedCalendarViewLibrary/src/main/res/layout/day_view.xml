@@ -31,7 +31,7 @@
                 android:gravity="center"
                 android:text="31"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/date_number_text_color" />
+                android:textColor="@color/date_number_text_color_default" />
 
             <ImageView
                 android:id="@+id/eventIndicator"
